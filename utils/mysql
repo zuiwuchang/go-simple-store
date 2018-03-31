@@ -1,0 +1,4 @@
+create database GoSimpleStore DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+create user 'GoSimpleStore'@'localhost' identified by '12345678';
+grant ALL PRIVILEGES on GoSimpleStore.* to 'GoSimpleStore'@'localhost' ;
+flush privileges;

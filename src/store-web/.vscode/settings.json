@@ -1,0 +1,13 @@
+{
+	"files.exclude": {
+		"app/routes": true,
+		"app/tmp": true,
+		"app/version.go": true,
+		".vscode": true,
+		".gitignore": true,
+		"README.md": true,
+		"messages": true,
+		"tests": true,
+		"log": true,
+	}
+}
