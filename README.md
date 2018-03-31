@@ -10,12 +10,12 @@
 
 如果你的客戶在 linux下 太恭喜你了 你最好使用 yum 或 deb 等更成熟的解決方案 但 也不妨一試本項目 畢竟 這個項目 比 yum deb 等簡單許多 且可以同時工作在 red hat 和 debian 系列的 系統上
 
-# go-simple-store-web
+# web
 實現了 軟件倉庫 的 服務器 功能 以及 開放了一個 web 的管理 接口
 
-# go-simple-store-utils
+# utils
 提供了 將 軟件 打包 和一些 其它相關 工具
 
-# go-simple-store-system
+# system
 安裝到 客戶處的 軟件倉庫 系統
 
