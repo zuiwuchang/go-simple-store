@@ -6,8 +6,10 @@
 		".vscode": true,
 		".gitignore": true,
 		"README.md": true,
-		"messages": true,
 		"tests": true,
 		"log": true,
+		"typings.json": true,
+		"typings": true,
+		"jsconfig.json": true,
 	}
 }

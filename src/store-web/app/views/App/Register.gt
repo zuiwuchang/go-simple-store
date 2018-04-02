@@ -1,0 +1,12 @@
+  <script src="/public/js/angular-1.6.9.min.js"></script>
+  
+[[if .DevMode]]
+  <script src="/public/views/App/Register.js"></script>
+[[else]]
+  <script src="/public/views/App/Register.min.js"></script>
+[[end]]
+<script>
+InitJsPage({
+
+});
+</script>

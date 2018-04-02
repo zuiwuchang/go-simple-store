@@ -13,9 +13,8 @@ var _Engine *xorm.Engine
 
 // Init 初始化 數據庫
 func Init() {
-	cnf := configure.Get()
-	db := &cnf.DB
-	cache := db.Cache
+	db := configure.Get().DB
+
 	// 初始化 數據庫 引擎
 	engine, e := xorm.NewEngine(
 		db.Driver,
@@ -28,17 +27,26 @@ func Init() {
 	if e != nil {
 		Logger.Fault.Fatalln(e)
 	}
+
+	// show sql
+	if db.Show {
+		engine.ShowSQL(true)
+	}
+
 	// 保存 單件
 	_Engine = engine
 
-	// 初始化 緩存
-	if cache.Size > 0 {
-		cacher := xorm.NewLRUCacher(xorm.NewMemoryStore(), cache.Size)
-		engine.SetDefaultCacher(cacher)
-	}
-
 	// 初始化 表
 	initDB()
+
+	// 初始化 緩存
+	initCache()
+
+}
+
+// Engine .
+func Engine() *xorm.Engine {
+	return _Engine
 }
 
 // NewSession .
@@ -55,6 +63,26 @@ func NewTransaction() (session *xorm.Session, e error) {
 		return
 	}
 	return
+}
+func initCache() {
+	cache := configure.Get().DB.Cache
+	engine := Engine()
+	var e error
+
+	// system
+	{
+		cacher := xorm.NewLRUCacher(xorm.NewMemoryStore(), 1)
+		e = engine.MapCacher(&data.SystemInfo{}, cacher)
+		if e != nil {
+			Logger.Fault.Fatalln(e)
+		}
+	}
+
+	// default
+	if cache.Size > 0 {
+		cacher := xorm.NewLRUCacher(xorm.NewMemoryStore(), cache.Size)
+		engine.SetDefaultCacher(cacher)
+	}
 }
 func initDB() {
 	session, e := NewTransaction()
@@ -75,6 +103,7 @@ func initDB() {
 
 	if e = initTable(
 		session,
+		&data.SystemInfo{},
 		&data.App{},
 		&data.AppVersion{},
 		&data.User{},
@@ -82,10 +111,27 @@ func initDB() {
 	); e != nil {
 		return
 	}
+	// 初始化 系統表
+	if e = initSystemInfo(session); e != nil {
+		return
+	}
+
 	// 初始化 root 組
 	if e = initGroup(session); e != nil {
 		return
 	}
+}
+func initSystemInfo(session *xorm.Session) (e error) {
+	bean := &data.SystemInfo{
+		ID: 1,
+	}
+	var ok bool
+	if ok, e = session.Get(bean); e != nil {
+		return
+	} else if !ok {
+		_, e = session.Insert(bean)
+	}
+	return
 }
 func initGroup(session *xorm.Session) (e error) {
 	bean := &data.UserGroup{

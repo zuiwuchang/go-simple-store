@@ -1,0 +1,40 @@
+[[set . "title" (msg . "About")]] [[template "headerNav.html" .]]
+
+<div class="container">
+
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">go-simple-store</h3>
+    </div>
+    <div class="panel-body">
+      <p>go-simple-store 是由 king 用 golang 開發的一個開源(GPL3.0) 軟體發佈 更新 平臺</p>
+      <p> github.com
+        <a href="https://github.com/zuiwuchang/go-simple-store">https://github.com/zuiwuchang/go-simple-store</a>
+      </p>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">store-web</h3>
+    </div>
+    <div class="panel-body">
+      <p>store-web 是 go-simple-store 中的一個 組建 為整個系統提供了 一個中心服務器 以及一個 web的 管理瀏覽 接口</p>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">[[msg . "ContactAuthor"]]</h3>
+      </div>
+      <div class="panel-body">
+          <p>email : zuiwuchang@gmail.com</p>
+          <p>blog : <a href="http://blog.king011.com">http://blog.king011.com</a></p>
+          <p>github : <a href="github.com/zuiwuchang">github.com/zuiwuchang</a></p>
+          <p>google+ : <a href="https://plus.google.com/u/0/+%E5%AE%8F%E6%9D%B0%E9%99%B3">https://plus.google.com/u/0/+宏杰陳</a></p>
+      </div>
+    </div>
+</div>
+
+[[template "footer.html" .]]

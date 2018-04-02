@@ -1,21 +1,17 @@
-{{set . "title" "Home"}}
-{{template "header.html" .}}
+[[set . "title" (msg . "App")]] [[template "headerNav.html" .]]
 
-<header class="jumbotron" style="background-color:#A9F16C">
-  <div class="container">
-    <div class="row">
-      <h1>It works!</h1>
-      <p></p>
-    </div>
-  </div>
-</header>
 
 <div class="container">
-  <div class="row">
-    <div class="span6">
-      {{template "flash.html" .}}
-    </div>
-  </div>
+  <header class="jumbotron">
+    <p>歡迎回來</p>
+    <p>おかえりなさい</p>
+    <p>Welcome back</p>
+    <p>
+      <pre>[[.version]]</pre>
+    </p>
+  </header>
 </div>
 
-{{template "footer.html" .}}
+
+
+[[template "footer.html" .]]

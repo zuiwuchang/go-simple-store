@@ -1,0 +1,15 @@
+# main
+App=go 商店
+MainPage=首頁
+About=關於
+Login=登入
+Register=註冊
+PlaceholderApp=請輸入套件名稱
+Search=查找
+License=許可協議
+ContactAuthor=聯繫作者
+InputRegisterEmail=請輸入要註冊的郵箱地址
+InputRegisterPassword=請輸入註冊密碼
+EmailAddress=郵箱地址
+Password=密碼
+SubmitRegister=註冊新用戶

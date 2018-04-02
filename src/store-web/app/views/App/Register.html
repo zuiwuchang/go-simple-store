@@ -1,0 +1,22 @@
+[[set . "title" (msg . "Register")]] [[template "headerNav.html" .]]
+
+<div class="container" ng-app="app">
+  <form ng-controller="form" ng-submit="onSubmit()">
+    <div class="form-group">
+      <label for="inputEmail">[[msg . "EmailAddress"]]</label>
+      <input class="form-control" id="inputEmail" ng-model="email" ng-blur="onEmailBlur()" ng-change="onEmailChange()" aria-describedby="helpEmail" placeholder='[[msg . "InputRegisterEmail"]]'>
+      <small id="helpEmail" class="form-text text-muted">We'll never share your email with anyone else.</small>
+    </div>
+
+    <div class="form-group">
+      <label for="inputPassword">[[msg . "Password"]]</label>
+      <input class="form-control" id="inputPassword" ng-model="pwd" placeholder='[[msg . "InputRegisterPassword"]]'>
+    </div>
+
+    <button type="submit" class="btn btn-primary">[[msg . "SubmitRegister"]]</button>
+
+  </form>
+</div>
+[[template "App/Register.gt" .]]
+
+[[template "footer.html" .]]

@@ -1,18 +1,18 @@
-{{if .flash.success}}
+[[if .flash.success]]
 <div class="alert alert-success">
-	{{.flash.success}}
+	[[.flash.success]]
 </div>
-{{end}}
+[[end]]
 
-{{if or .errors .flash.error}}
+[[if or .errors .flash.error]]
 <div class="alert alert-danger">
-	{{if .flash.error}}
-		{{.flash.error}}
-	{{end}}
+	[[if .flash.error]]
+		[[.flash.error]]
+	[[end]]
 	<ul style="margin-top:10px;">
-		{{range .errors}}
-			<li>{{.}}</li>
-		{{end}}
+		[[range .errors]]
+			<li>[[.]]</li>
+		[[end]]
 	</ul>
 </div>
-{{end}}
+[[end]]

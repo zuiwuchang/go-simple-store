@@ -1,5 +1,15 @@
-  {{if eq .RunMode "dev"}}
-    {{template "debug.html" .}}
-  {{end}}
+  [[if eq .RunMode "dev"]]
+    [[template "debug.html" .]]
+  [[end]]
+
+<style>
+.k-footer-docs {
+    text-align: center;
+    padding-top: 16px;
+    padding-bottom: 24px;
+}
+</style>
+  <p class="k-footer-docs">writing by king</p>
+
   </body>
 </html>
