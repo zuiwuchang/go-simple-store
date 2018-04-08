@@ -3,6 +3,7 @@ package controllers
 import (
 	"github.com/revel/revel"
 	"store-web/app/configure"
+	"store-web/app/db/manipulator"
 )
 
 // App .
@@ -28,7 +29,13 @@ func (c App) License() revel.Result {
 
 // Register 註冊
 func (c App) Register() revel.Result {
-	return c.Render()
+	var mSys manipulator.SystemInfo
+	systemInfo, e := mSys.Get()
+	if e != nil {
+		return c.RenderError(e)
+	}
+	systemInfo.Register = 1
+	return c.Render(systemInfo)
 }
 
 // Login 登入

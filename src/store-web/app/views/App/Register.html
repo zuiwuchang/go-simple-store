@@ -1,11 +1,15 @@
 [[set . "title" (msg . "Register")]] [[template "headerNav.html" .]]
 
-<div class="container" ng-app="app">
-  <form ng-controller="form" ng-submit="onSubmit()">
-    <div class="form-group">
+<div class="container" ng-app="app" ng-init="modeRegister=[[.systemInfo.Register]]">
+  <!-- 關閉註冊 -->
+  <p class="text-center" ng-hide="modeRegister!=0">[[msg . "Register.disabled wait enable"]]</p>
+  <!-- 註冊 -->
+  <form ng-controller="form" ng-submit="onSubmit()" ng-show="modeRegister!=0">
+    <div class="form-group" ng-controller="ctrl-email" ng-class="inputClass">
       <label for="inputEmail">[[msg . "EmailAddress"]]</label>
-      <input class="form-control" id="inputEmail" ng-model="email" ng-blur="onEmailBlur()" ng-change="onEmailChange()" aria-describedby="helpEmail" placeholder='[[msg . "InputRegisterEmail"]]'>
-      <small id="helpEmail" class="form-text text-muted">We'll never share your email with anyone else.</small>
+      <input class="form-control" id="inputEmail" ng-model="email" ng-disabled="disabled" ng-blur="onBlur()" ng-change="onChange()"
+        aria-describedby="helpEmail" placeholder='[[msg . "InputRegisterEmail"]]'>
+      <small class="form-text text-muted">We'll never share your email with anyone else.</small>
     </div>
 
     <div class="form-group">
@@ -14,9 +18,7 @@
     </div>
 
     <button type="submit" class="btn btn-primary">[[msg . "SubmitRegister"]]</button>
-
   </form>
-</div>
-[[template "App/Register.gt" .]]
 
-[[template "footer.html" .]]
+</div>
+[[template "App/Register.gt" .]] [[template "footer.html" .]]

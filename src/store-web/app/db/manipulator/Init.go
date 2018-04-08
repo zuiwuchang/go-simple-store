@@ -123,7 +123,8 @@ func initDB() {
 }
 func initSystemInfo(session *xorm.Session) (e error) {
 	bean := &data.SystemInfo{
-		ID: 1,
+		ID:       1,
+		Register: data.RegisterOpen,
 	}
 	var ok bool
 	if ok, e = session.Get(bean); e != nil {

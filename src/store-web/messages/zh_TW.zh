@@ -13,3 +13,6 @@ InputRegisterPassword=請輸入註冊密碼
 EmailAddress=郵箱地址
 Password=密碼
 SubmitRegister=註冊新用戶
+
+# Register 註冊頁面
+Register.disabled wait enable=註冊功能已關閉，請等待管理員開啟。
