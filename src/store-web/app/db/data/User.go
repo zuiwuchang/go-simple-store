@@ -1,8 +1,14 @@
 package data
 
 import (
+	"errors"
+	kStrings "github.com/zuiwuchang/king-go/strings"
+	"regexp"
 	"time"
 )
+
+// ErrBadUserPwd .
+var ErrBadUserPwd = errors.New("bad password")
 
 // User 用戶
 type User struct {
@@ -24,4 +30,31 @@ type User struct {
 
 	// 所屬 用戶組id (多個以 : 分隔)
 	UserGroup string
+}
+
+// SetEmail .
+func (u *User) SetEmail(val string) (e error) {
+	e = kStrings.MatchGMail(val)
+	if e != nil {
+		return
+	}
+	u.Email = val
+	return
+}
+
+var regexpUserPwd, _ = regexp.Compile(`^[a-f0-9]+$`)
+
+// SetPwd .
+func (u *User) SetPwd(val string) (e error) {
+	if len(val) != 128 {
+		e = ErrBadUserPwd
+		return
+	}
+	if !regexpUserPwd.MatchString(val) {
+		e = ErrBadUserPwd
+		return
+	}
+
+	u.Pwd = val
+	return
 }

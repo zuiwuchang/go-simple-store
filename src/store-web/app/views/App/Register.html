@@ -1,24 +1,41 @@
 [[set . "title" (msg . "Register")]] [[template "headerNav.html" .]]
 
-<div class="container" ng-app="app" ng-init="modeRegister=[[.systemInfo.Register]]">
+<div class="container AngularView" id="AngularView">
   <!-- 關閉註冊 -->
-  <p class="text-center" ng-hide="modeRegister!=0">[[msg . "Register.disabled wait enable"]]</p>
+  [[if eq .systemInfo.Register 0]]
+  <p class="text-center">[[msg . "Register.disabled wait enable"]]</p>
+  [[else]]
   <!-- 註冊 -->
-  <form ng-controller="form" ng-submit="onSubmit()" ng-show="modeRegister!=0">
+  <form ng-controller="form" ng-submit="onSubmit()">
     <div class="form-group" ng-controller="ctrl-email" ng-class="inputClass">
       <label for="inputEmail">[[msg . "EmailAddress"]]</label>
       <input class="form-control" id="inputEmail" ng-model="email" ng-disabled="disabled" ng-blur="onBlur()" ng-change="onChange()"
         aria-describedby="helpEmail" placeholder='[[msg . "InputRegisterEmail"]]'>
-      <small class="form-text text-muted">We'll never share your email with anyone else.</small>
+      <small class="form-text text-muted">{{error}}</small>
     </div>
+
+    <div class="form-group" ng-controller="ctrl-password" ng-class="inputClass">
+      <label for="inputPassword">[[msg . "Password"]]</label>
+      <input class="form-control" id="inputPassword" ng-model="pwd" ng-disabled="disabled" ng-blur="onBlur()" ng-change="onChange()"
+        placeholder='[[msg . "InputRegisterPassword"]]'>
+      <small class="form-text text-muted">{{error}}</small>
+    </div>
+
+    [[if eq .systemInfo.Register 2]]
+    <div class="form-group" ng-controller="ctrl-invite" ng-class="inputClass">
+      <label for="inputInvite">[[msg . "InviteCode"]]</label>
+      <input class="form-control" id="inputInvite" ng-model="code" ng-disabled="disabled" ng-blur="onBlur()" ng-change="onChange()"
+        placeholder='[[msg . "InputInviteCode"]]'>
+      <small class="form-text text-muted">{{error}}</small>
+    </div>
+    [[end]]
 
     <div class="form-group">
-      <label for="inputPassword">[[msg . "Password"]]</label>
-      <input class="form-control" id="inputPassword" ng-model="pwd" placeholder='[[msg . "InputRegisterPassword"]]'>
+      <button type="submit" class="btn btn-primary" ng-disabled="disabled">[[msg . "SubmitRegister"]]</button>
+      <br>
+      <small class="form-text text-muted">{{error}}</small>
     </div>
-
-    <button type="submit" class="btn btn-primary">[[msg . "SubmitRegister"]]</button>
   </form>
-
+  [[end]]
 </div>
 [[template "App/Register.gt" .]] [[template "footer.html" .]]

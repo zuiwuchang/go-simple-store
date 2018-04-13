@@ -4,7 +4,8 @@
     ],
     "typeAcquisition": {
         "include": [
-            "angular"
+            "angular",
+            "strings"
         ]
     }
 }

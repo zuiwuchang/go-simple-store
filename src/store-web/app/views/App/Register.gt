@@ -1,11 +1,35 @@
-
-[[if .DevMode]]
-  <script src="/public/views/App/Register.js"></script>
-[[else]]
-  <script src="/public/views/App/Register.min.js"></script>
-[[end]]
 <script>
-InitJsPage({
+[[if .DevMode]]
+var pageJS = "../views/App/Register";
+[[else]]
+var pageJS = "../views/App/Register.min";
+[[end]]
+require([pageJS],function(init){
+  init({
+    Lange:{
+      "E.Unknow":[[msg . "E.Unknow"]],
 
+      "E.GM.SplitLess":[[msg . "E.GM.SplitLess"]],
+      "E.GM.SplitLarge":[[msg . "E.GM.SplitLarge"]],
+
+      "E.GM.LenLess":[[msg . "E.GM.LenLess"]],
+      "E.GM.LenLarge":[[msg . "E.GM.LenLarge"]],
+      "E.GM.BadBegin":[[msg . "E.GM.BadBegin"]],
+      "E.GM.BadEnd":[[msg . "E.GM.BadEnd"]],
+      "E.GM.PointLink":[[msg . "E.GM.PointLink"]],
+
+      "E.GM.BadHost":[[msg . "E.GM.BadHost"]],
+
+
+
+      "e.email exists":[[msg . "Register.email already exists"]],
+      "e.pwd empty":[[msg . "Register.pwd empty"]],
+      "e.code empty":[[msg . "Register.code empty"]],
+    },
+    SystemInfo:{
+      Register:[[.systemInfo.Register]],
+    }
+  });
+  $("#AngularView").show();
 });
 </script>
