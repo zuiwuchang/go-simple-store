@@ -3,18 +3,21 @@ App=go 商店
 MainPage=首頁
 About=關於
 Login=登入
+Logout=登出
 Register=註冊
 PlaceholderApp=請輸入套件名稱
 Search=查找
 License=許可協議
 ContactAuthor=聯繫作者
 InputRegisterEmail=請輸入要註冊的郵箱地址
-InputRegisterPassword=請輸入註冊密碼
+InputRegisterPassword=請輸入註冊密碼(開始和結尾的空格會被忽略)
 EmailAddress=郵箱地址
 Password=密碼
 SubmitRegister=註冊新用戶
 InviteCode=邀請碼
 InputInviteCode=請輸入邀請碼
+InputEmail=請輸入郵箱地址
+InputPassword=請輸入登入密碼(開始和結尾的空格會被忽略)
 
 # error
 E.Unknow=未知錯誤
@@ -33,3 +36,8 @@ E.GM.BadHost=主機名錯誤
 Register.disabled wait enable=註冊功能已關閉，請等待管理員開啟。
 Register.email already exists=Email 已經被註冊
 Register.pwd empty=密碼不能為空
+
+# Login 登入頁面
+Login.Submit=登入
+Login.pwd empty=密碼不能為空
+Login.not match=未找到匹配的Email和密碼

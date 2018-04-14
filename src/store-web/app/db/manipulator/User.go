@@ -29,6 +29,31 @@ func (User) IsEmailExists(email string) (yes bool, e error) {
 	return
 }
 
+// GetByEmail 使用 email 查詢
+func (User) GetByEmail(email string) (fuser *data.User, e error) {
+	// 驗證 用戶名
+	user := &data.User{}
+	e = user.SetEmail(email)
+	if e != nil {
+		if log.Warn != nil {
+			log.Warn.Println(e)
+		}
+		return
+	}
+
+	// 查找用戶
+	var ok bool
+	if ok, e = Engine().Get(user); e != nil {
+		if log.Error != nil {
+			log.Error.Println(e)
+		}
+		return
+	} else if ok {
+		fuser = user
+	}
+	return
+}
+
 // Register 註冊 新用戶
 func (u User) Register(email, pwd, code string) (nuser *data.User, e error) {
 	// 驗證 用戶名 密碼

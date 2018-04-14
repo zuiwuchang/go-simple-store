@@ -1,0 +1,29 @@
+[[set . "title" (msg . "Login")]] [[template "headerNav.html" .]]
+
+
+<div class="container AngularView" id="AngularView">
+  <form ng-controller="form" ng-submit="onSubmit()">
+    <div class="form-group" ng-controller="ctrl-email" ng-class="inputClass">
+      <label for="inputEmail">[[msg . "EmailAddress"]]</label>
+      <input class="form-control" id="inputEmail" ng-model="email" ng-disabled="disabled" ng-blur="onBlur()" ng-change="onChange()"
+        aria-describedby="helpEmail" placeholder='[[msg . "InputEmail"]]'>
+      <small class="form-text text-muted">{{error}}</small>
+    </div>
+
+    <div class="form-group" ng-controller="ctrl-password" ng-class="inputClass">
+      <label for="inputPassword">[[msg . "Password"]]</label>
+      <input class="form-control" type="password" id="inputPassword" ng-model="pwd" ng-disabled="disabled" ng-blur="onBlur()" ng-change="onChange()"
+        placeholder='[[msg . "InputPassword"]]'>
+      <small class="form-text text-muted">{{error}}</small>
+    </div>
+
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary" ng-disabled="disabled">[[msg . "Login.Submit"]]</button>
+      <br>
+      <small class="form-text text-muted">{{error}}</small>
+    </div>
+  </form>
+</div>
+
+
+[[template "App/Login.gt" .]] [[template "footer.html" .]]
