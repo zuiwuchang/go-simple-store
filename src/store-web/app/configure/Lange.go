@@ -34,6 +34,7 @@ func (l *Lange) format() {
 	}
 
 	keys := make(map[string]bool)
+	keys[l.Default] = true
 	for i := 0; i < len(l.Locale); i++ {
 		k := strings.TrimSpace(l.Locale[i])
 		if k == "" {
