@@ -27,10 +27,21 @@ func init() {
 		revel.FlashFilter,             // Restore and write the flash cookie.
 		revel.ValidationFilter,        // Restore kept validation errors and save new ones from cookie.
 		revel.I18nFilter,              // Resolve the requested language
-		HeaderFilter,                  // Add some security based headers
-		revel.InterceptorFilter,       // Run interceptors around the action.
-		revel.CompressFilter,          // Compress the result.
-		revel.ActionInvoker,           // Invoke the action.
+		func(c *revel.Controller, fc []revel.Filter) {
+			locale := (c.ViewArgs[revel.CurrentLocaleViewArg]).(string)
+
+			// 過濾 未翻譯的 語言
+			locale = configure.Get().Lange.Get(locale)
+
+			c.Request.Locale = locale
+			c.ViewArgs[revel.CurrentLocaleViewArg] = locale
+
+			fc[0](c, fc[1:])
+		},
+		HeaderFilter,            // Add some security based headers
+		revel.InterceptorFilter, // Run interceptors around the action.
+		revel.CompressFilter,    // Compress the result.
+		revel.ActionInvoker,     // Invoke the action.
 	}
 
 	// Register startup functions with OnAppStart

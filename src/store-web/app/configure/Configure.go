@@ -17,6 +17,8 @@ type Configure struct {
 
 	// 日誌 配置
 	Log Log
+	// 語言設置
+	Lange Lange
 }
 
 var gConfigure Configure
@@ -47,4 +49,8 @@ func Init(filename string) {
 	if e != nil {
 		panic(e)
 	}
+
+	// 標準化 配置
+	gConfigure.Lange.format()
+
 }
