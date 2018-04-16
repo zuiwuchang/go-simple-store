@@ -12,7 +12,9 @@ func init() {
 func checkRoot(c *revel.Controller) revel.Result {
 	if flasg, ok := c.Session[utils.SessionKeyGroup]; ok &&
 		utils.HasFlags(flasg, utils.GroupRootFlag) {
-		return nil
+		if active, ok := c.Session[utils.SessionKeyActive]; ok && active == "1" {
+			return nil
+		}
 	}
 	return c.RenderError(errors.New(c.Message("E.PermissionDenied")))
 }

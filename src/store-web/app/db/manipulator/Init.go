@@ -130,6 +130,9 @@ func initSystemInfo(session *xorm.Session) (e error) {
 		return
 	} else if !ok {
 		bean.Register = data.RegisterOpen
+		bean.ActiveTitle = "active"
+		bean.ActiveText = `<h1>Welcome {{.Email}}</h1>
+<p><a href="http://{{.Host}}/App/Active?id={{.ID}}&code={{.Code}}">click me<a> to activate</p>`
 		_, e = session.Insert(bean)
 	}
 	return

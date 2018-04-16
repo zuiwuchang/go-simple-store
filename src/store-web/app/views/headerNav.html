@@ -38,6 +38,9 @@
             </li>
             <li role="separator" class="divider"></li>
             <li>
+              <a href="/Root/Group">[[msg . "Admin Group"]]</a>
+            </li>
+            <li>
               <a href="/Root/App">[[msg . "Admin User"]]</a>
             </li>
             <li>
@@ -62,7 +65,7 @@
       <ul class="nav navbar-nav navbar-right">
         [[if .session.UserID ]]
         <!-- 是否激活 -->
-        [[if .session.UserActive ]] [[else]]
+        [[if eq .session.UserActive "0"]]
         <li>
           <a href="/App/Active">[[msg . "Active"]]</a>
         </li>

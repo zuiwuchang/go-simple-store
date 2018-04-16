@@ -4,6 +4,7 @@ MainPage=首頁
 About=關於
 Login=登入
 Logout=登出
+Active=激活
 Register=註冊
 PlaceholderApp=請輸入套件名稱
 Search=查找
@@ -23,6 +24,7 @@ System Management=系統管理
 Admin App=套件
 Admin User=用戶
 Admin Code=邀請碼
+Admin Group=用戶組
 Admin System=系統
 
 Save=保存
@@ -51,6 +53,12 @@ Register.code empty=邀請碼不能為空
 Login.Submit=登入
 Login.pwd empty=密碼不能為空
 Login.not match=未找到匹配的Email和密碼
+
+# Active 激活頁面
+Active.Title=帳號已激活
+Active.Success=激活成功
+Active.Auto=自動跳轉倒計時
+
 
 # Root.System
 rSystem.Title=系統設定

@@ -1,11 +1,13 @@
 package manipulator
 
 import (
-	"errors"
 	"github.com/go-xorm/xorm"
+	kEmail "github.com/zuiwuchang/king-go/net/email"
 	"store-web/app/db/data"
 	"store-web/app/db/dberr"
 	"store-web/app/log"
+	"strings"
+	"time"
 )
 
 // User .
@@ -55,7 +57,7 @@ func (User) GetByEmail(email string) (fuser *data.User, e error) {
 }
 
 // Register 註冊 新用戶
-func (u User) Register(email, pwd, code string) (nuser *data.User, e error) {
+func (u User) Register(host, email, pwd, code string) (nuser *data.User, e error) {
 	// 驗證 用戶名 密碼
 	user := &data.User{}
 	e = user.SetEmail(email)
@@ -72,6 +74,8 @@ func (u User) Register(email, pwd, code string) (nuser *data.User, e error) {
 		}
 		return
 	}
+	user.Created = time.Now()
+	user.LastEmail = user.Created
 
 	// 創建 session
 	var session *xorm.Session
@@ -110,6 +114,40 @@ func (u User) Register(email, pwd, code string) (nuser *data.User, e error) {
 		if e = u.register(session, systemInfo, user, code); e == nil {
 			nuser = user
 		}
+		// 發送 激活 郵件
+		text, en := data.GetActiveCode(user.ID, user.Created.Unix())
+		if en != nil {
+			if log.Warn != nil {
+				log.Warn.Println(en)
+			}
+			return
+		}
+		text, en = data.GetActiveEmail(
+			&data.ActiveContext{
+				Host:  host,
+				Email: user.Email,
+				ID:    user.ID,
+				Code:  text,
+			},
+			systemInfo.ActiveText,
+		)
+		if en != nil {
+			if log.Warn != nil {
+				log.Warn.Println(en)
+			}
+			return
+		}
+		if en = kEmail.SendSSLEmail(
+			systemInfo.SMTP,
+			systemInfo.Email,
+			systemInfo.Password,
+			user.Email,
+			systemInfo.ActiveTitle,
+			text,
+			kEmail.TypeHTML,
+		); en != nil && log.Warn != nil {
+			log.Warn.Println(en)
+		}
 		return
 	}
 	if e = u.registerRoot(session, systemInfo, user); e == nil {
@@ -142,6 +180,99 @@ func (User) registerRoot(session *xorm.Session, systemInfo *data.SystemInfo, use
 	return
 }
 func (User) register(session *xorm.Session, systemInfo *data.SystemInfo, user *data.User, code string) (e error) {
-	e = errors.New("no code")
+	if systemInfo.Register == data.RegisterInvite {
+		// 驗證 邀請碼
+	}
+	// 增加 用戶
+	_, e = session.InsertOne(user)
+	if e != nil {
+		if log.Error != nil {
+			log.Error.Println(e)
+		}
+		return
+	}
+	return
+}
+
+// Active 激活 帳號
+func (User) Active(id int64, code string) (user *data.User, e error) {
+	code = strings.TrimSpace(code)
+	if code == "" {
+		e = dberr.ErrUserCodeNotMatch
+		if log.Warn != nil {
+			log.Warn.Println(e, id, code)
+		}
+		return
+	}
+	if id == 0 {
+		e = dberr.ErrUserNotFound
+		if log.Warn != nil {
+			log.Warn.Println(e, id)
+		}
+		return
+	}
+
+	// session
+	var session *xorm.Session
+	session, e = NewTransaction()
+	if e != nil {
+		if log.Error != nil {
+			log.Error.Println(e)
+		}
+		return
+	}
+	defer func() {
+		if e == nil {
+			session.Commit()
+		} else {
+			session.Rollback()
+		}
+		session.Close()
+	}()
+
+	// find
+	bean := &data.User{ID: id}
+	var ok bool
+	if ok, e = session.Get(bean); e != nil {
+		if log.Error != nil {
+			log.Error.Println(e)
+		}
+		return
+	} else if !ok || bean.Active {
+		e = dberr.ErrUserNotFound
+		if log.Warn != nil {
+			log.Warn.Println(e, id)
+		}
+		return
+	}
+
+	// code
+	var str string
+	str, e = data.GetActiveCode(id, bean.Created.Unix())
+	if e != nil {
+		if log.Error != nil {
+			log.Error.Println(e)
+		}
+		return
+	}
+	if code != str {
+		e = dberr.ErrUserCodeNotMatch
+		if log.Warn != nil {
+			log.Warn.Println(e, id, code)
+		}
+		return
+	}
+
+	// active
+	bean.Active = true
+	_, e = session.ID(id).Cols(data.ColUserActive).Update(bean)
+	if e != nil {
+		if log.Error != nil {
+			log.Error.Println(e)
+		}
+		return
+	}
+
+	user = bean
 	return
 }

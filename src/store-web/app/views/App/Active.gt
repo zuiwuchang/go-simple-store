@@ -1,0 +1,13 @@
+<script>
+[[if .DevMode]]
+var pageJS = "../views/App/Active";
+[[else]]
+var pageJS = "../views/App/Active.min";
+[[end]]
+require(["jquery",pageJS],function($,init){
+  init({
+    App:document.getElementById("AngularView"),
+  });
+  $("#AngularView").show();
+});
+</script>

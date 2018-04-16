@@ -7,6 +7,11 @@ import (
 	"time"
 )
 
+const (
+	// ColUserActive .
+	ColUserActive = "active"
+)
+
 // ErrBadUserPwd .
 var ErrBadUserPwd = errors.New("bad password")
 
@@ -23,7 +28,7 @@ type User struct {
 	Active bool
 
 	// 註冊 時間
-	Created time.Time `xorm:"created"`
+	Created time.Time
 
 	// 最後發送 激活 email 時間
 	LastEmail time.Time

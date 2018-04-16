@@ -95,6 +95,7 @@ func (s *SystemInfo) SetActiveText(val string) (e error) {
 		Host:  "test.king.xxx",
 		Email: "testName@xxx.xxx",
 		ID:    0,
+		Code:  "19111010",
 	})
 	if e != nil {
 		return

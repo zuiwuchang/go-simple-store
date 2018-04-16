@@ -1,10 +1,12 @@
 package controllers
 
 import (
+	"fmt"
 	"github.com/revel/revel"
 	"store-web/app/ajax"
 	"store-web/app/configure"
 	"store-web/app/db/manipulator"
+	"store-web/app/utils"
 )
 
 // App .
@@ -59,7 +61,7 @@ func (c App) AjaxIsEmailExists(email string) revel.Result {
 func (c App) AjaxRegister(email, pwd, code string) revel.Result {
 	var result ajax.Result
 	var mUser manipulator.User
-	if user, e := mUser.Register(email, pwd, code); e == nil {
+	if user, e := mUser.Register(c.Request.Host, email, pwd, code); e == nil {
 		result.Value = user.ID
 		// 設置 登入 session
 		writeSession(c.Session, user)
@@ -103,4 +105,19 @@ func (c App) AjaxLogin(email, pwd string) revel.Result {
 		result.Emsg = e.Error()
 	}
 	return c.RenderJSON(&result)
+}
+
+// Active 激活帳號
+func (c App) Active(id int64, code string) revel.Result {
+
+	var mUser manipulator.User
+	user, e := mUser.Active(id, code)
+	if e != nil {
+		return c.RenderError(e)
+	}
+
+	if sID, ok := c.Session[utils.SessionKeyID]; ok && sID == fmt.Sprint(id) {
+		c.Session[utils.SessionKeyActive] = "1"
+	}
+	return c.Render(user)
 }

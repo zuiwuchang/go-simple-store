@@ -8,6 +8,7 @@ import (
 	"store-web/app/db/data"
 	"store-web/app/db/manipulator"
 	"strings"
+	"time"
 )
 
 // Root 僅root 可以訪問的 管理頁
@@ -89,11 +90,19 @@ func (c Root) AjaxTestActive(text string) revel.Result {
 		return c.RenderJSON(&result)
 	}
 
-	str, e := data.GetActiveEmail(
+	str, e := data.GetActiveCode(0, time.Now().Unix())
+	if e != nil {
+		result.Code = ajax.Error
+		result.Emsg = e.Error()
+
+		return c.RenderJSON(&result)
+	}
+	str, e = data.GetActiveEmail(
 		&data.ActiveContext{
 			Host:  c.Request.Host,
 			Email: "testName@xxx.xxx",
 			ID:    0,
+			Code:  str,
 		},
 		text,
 	)
