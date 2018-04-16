@@ -1,0 +1,27 @@
+<script>
+[[if .DevMode]]
+var pageJS = "../views/Root/System";
+[[else]]
+var pageJS = "../views/Root/System.min";
+[[end]]
+require(["jquery",pageJS],function($,init){
+  init({
+    App:document.getElementById("AngularView"),
+    Lange:{
+      "E.Unknow":[[msg . "E.Unknow"]],
+
+    },
+    SystemInfo:{
+      Register:[[.systemInfo.Register]],
+
+      SMTP:[[.systemInfo.SMTP]],
+      Email:[[.systemInfo.Email]],
+      Password:[[.systemInfo.Password]],
+
+      ActiveTitle:[[.systemInfo.ActiveTitle]],
+      ActiveText:[[.systemInfo.ActiveText]],
+    }
+  });
+  $("#AngularView").show();
+});
+</script>

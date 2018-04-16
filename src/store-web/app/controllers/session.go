@@ -4,22 +4,23 @@ import (
 	"fmt"
 	"store-web/app/db/data"
 	"store-web/app/log"
+	"store-web/app/utils"
 	"strconv"
 )
 
 const (
 	// SessionKeyID .
-	SessionKeyID = "UserID"
+	SessionKeyID = utils.SessionKeyID
 	// SessionKeyEmail .
-	SessionKeyEmail = "UserEmail"
+	SessionKeyEmail = utils.SessionKeyEmail
 	// SessionKeyActive .
-	SessionKeyActive = "UserActive"
+	SessionKeyActive = utils.SessionKeyActive
 	// SessionKeyCreated .
-	SessionKeyCreated = "UserCreated"
+	SessionKeyCreated = utils.SessionKeyCreated
 	// SessionKeyLastEmail .
-	SessionKeyLastEmail = "UserLastEmail"
+	SessionKeyLastEmail = utils.SessionKeyLastEmail
 	// SessionKeyGroup .
-	SessionKeyGroup = "UserGroup"
+	SessionKeyGroup = utils.SessionKeyGroup
 )
 
 func writeSession(session map[string]string, user *data.User) {

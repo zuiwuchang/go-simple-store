@@ -5,6 +5,7 @@ define(["angular", "Const", "king/strings", "crypto-js/sha512"], function () {
     let Register = Const.Register;
     let sha512 = require("crypto-js/sha512");
     return function (context) {
+        let App = context.App;
         let Lange = context.Lange;
 
         const CSSHasNone = "";
@@ -198,6 +199,6 @@ define(["angular", "Const", "king/strings", "crypto-js/sha512"], function () {
             ]
         );
         // 運行 angular 模塊
-        angular.bootstrap(document, ['app']);
+        angular.bootstrap(App, ['app']);
     };
 });

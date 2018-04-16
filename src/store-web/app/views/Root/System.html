@@ -1,0 +1,113 @@
+[[set . "title" (msg . "rSystem.Title")]] [[template "headerNav.html" .]]
+
+<div class="container AngularView" id="AngularView">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">[[msg . "rSystem.Version"]]</h3>
+    </div>
+    <div class="panel-body">
+      [[.version]]
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">[[msg . "rSystem.Register"]]</h3>
+    </div>
+    <div class="panel-body" ng-controller="ctrl-register">
+      <p>
+        <label class="radio-inline">
+          <input type="radio" ng-model="registerMode" ng-disabled="disabled" value="0"> [[msg . "rSystem.RegisterDisabled"]]
+        </label>
+
+        <label class="radio-inline">
+          <input type="radio" ng-model="registerMode" ng-disabled="disabled" value="1"> [[msg . "rSystem.RegisterOpen"]]
+        </label>
+
+        <label class="radio-inline">
+          <input type="radio" ng-model="registerMode" ng-disabled="disabled" value="2"> [[msg . "rSystem.RegisterInvite"]]
+        </label>
+      </p>
+      <p>
+        <div class="alert alert-danger" role="alert" ng-hide="hideError()">
+          <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+          <span class="sr-only">Error:</span>
+          {{error}}
+        </div>
+        <button type="button" class="btn btn-default" ng-disabled="idDisabled()" ng-click="onSave()">[[msg . "Save"]]</button>
+
+      </p>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">[[msg . "rSystem.SMTP"]]</h3>
+    </div>
+    <div class="panel-body" ng-controller="ctrl-smtp">
+      <form>
+        <div class="form-group">
+          <label for="inputSMTP">[[msg . "rSystem.SMTPAddress"]]</label>
+          <input class="form-control" id="inputSMTP" ng-model="smtp" ng-disabled="disabled" placeholder='[[msg . "rSystem.InputSMTPAddress"]]'>
+        </div>
+
+        <div class="form-group">
+          <label for="inputEmail">[[msg . "rSystem.Email"]]</label>
+          <input class="form-control" id="inputEmail" ng-model="email" ng-disabled="disabled" placeholder='[[msg . "rSystem.InputEmail"]]'>
+        </div>
+
+        <div class="form-group">
+          <label for="inputPwd">[[msg . "rSystem.Password"]]</label>
+          <input class="form-control" type="password" id="inputPwd" ng-model="pwd" ng-disabled="disabled" placeholder='[[msg . "rSystem.InputPassword"]]'>
+        </div>
+
+        <div class="form-group">
+          <div class="alert alert-success" role="alert" ng-show="testOK">
+            <span class="glyphicon glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
+            <span class="sr-only"></span>
+            Success
+          </div>
+          <div class="alert alert-danger" role="alert" ng-hide="error==''">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="sr-only"></span>
+            {{error}}
+          </div>
+          <button type="button" class="btn btn-default" ng-click="onTest()" ng-disabled="idDisabledTest()">[[msg . "rSystem.TestSMTP"]]</button>
+          <button type="button" class="btn btn-default" ng-click="onSave()" ng-disabled="idDisabledSave()">[[msg . "Save"]]</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">[[msg . "rSystem.ActiveEmail"]]</h3>
+    </div>
+    <div class="panel-body" ng-controller="ctrl-email">
+      <form>
+        <div class="form-group">
+          <label for="inputActiveTitle">[[msg . "rSystem.ActiveTitle"]]</label>
+          <input class="form-control" id="inputActiveTitle" ng-model="title" ng-disabled="disabled" placeholder='[[msg . "rSystem.InputActiveTitle"]]'>
+        </div>
+        <div class="form-group">
+          <label for="inputActiveText">[[msg . "rSystem.ActiveText"]]</label>
+          <textarea class="form-control" id="inputActiveText" ng-model="text" ng-disabled="disabled" placeholder='[[msg . "rSystem.InputActiveTitle"]]'></textarea>
+        </div>
+
+        <div class="form-group">
+          <pre ng-show="testValue!=''">{{testValue}}</pre>
+          <div class="alert alert-danger" role="alert" ng-hide="error==''">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="sr-only"></span>
+            {{error}}
+          </div>
+          <button type="button" class="btn btn-default" ng-click="onTest()" ng-disabled="idDisabledTest()">[[msg . "rSystem.TestEmail"]]</button>
+          <button type="button" class="btn btn-default" ng-click="onSave()" ng-disabled="idDisabledSave()">[[msg . "Save"]]</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+[[template "Root/System.gt" .]] [[template "footer.html" .]]

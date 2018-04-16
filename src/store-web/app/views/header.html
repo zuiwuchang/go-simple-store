@@ -7,25 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="/public/css/bootstrap-3.3.6.min.css">
     <link rel="shortcut icon" type="image/png" href="/public/img/favicon.png">
-    <script src="/public/js/jquery-2.2.4.min.js"></script>
-    <script src="/public/js/bootstrap-3.3.6.min.js"></script>
-    
+   
     <script src="/public/js/require.js"></script>
-    <!-- <script src="/public/js/angular-1.6.9/angular.min.js"></script> -->
-    [[range .moreStyles]]
-      <link rel="stylesheet" type="text/css" href="/public/[[.]]">
-    [[end]]
-    [[range .moreScripts]]
-      <script src="/public/[[.]]" type="text/javascript" charset="utf-8"></script>
-    [[end]]
-  </head>
-  <body>
-<style>
-.AngularView{
-  display: none;
-}
-</style>
-
 <script>
 requirejs.config({
     // js 加載 根目錄
@@ -33,6 +16,8 @@ requirejs.config({
     paths: {
         // angular 相對 baseUrl 目錄
         'angular': 'angularjs/1.6.9/angular.min',
+        'jquery':'jquery-2.2.4.min',
+        'bootstrap':'bootstrap-3.3.6.min',
 [[if .DevMode]]
         'Const':'../views/Const',
 [[else]]
@@ -42,6 +27,16 @@ requirejs.config({
     shim: {
         // 將 angular 導出為全局 變量
         'angular' : { exports: 'angular' },
+        'bootstrap': ['jquery'],
     }
 });
+require(["jquery","bootstrap"])
 </script>
+    
+  </head>
+  <body>
+<style>
+.AngularView{
+  display: none;
+}
+</style>

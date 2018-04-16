@@ -18,8 +18,17 @@ InviteCode=邀請碼
 InputInviteCode=請輸入邀請碼
 InputEmail=請輸入郵箱地址
 InputPassword=請輸入登入密碼(開始和結尾的空格會被忽略)
+System Management=系統管理
+
+Admin App=套件
+Admin User=用戶
+Admin Code=邀請碼
+Admin System=系統
+
+Save=保存
 
 # error
+E.PermissionDenied=沒有權限
 E.Unknow=未知錯誤
 
 E.GM.SplitLess=請使用 "@" 分隔 "用戶名" "主機名"
@@ -36,8 +45,35 @@ E.GM.BadHost=主機名錯誤
 Register.disabled wait enable=註冊功能已關閉，請等待管理員開啟。
 Register.email already exists=Email 已經被註冊
 Register.pwd empty=密碼不能為空
+Register.code empty=邀請碼不能為空
 
 # Login 登入頁面
 Login.Submit=登入
 Login.pwd empty=密碼不能為空
 Login.not match=未找到匹配的Email和密碼
+
+# Root.System
+rSystem.Title=系統設定
+rSystem.Version=系統版本
+rSystem.Register=站點註冊
+rSystem.SMTP=郵件服務
+rSystem.RegisterDisabled=關閉註冊
+rSystem.RegisterOpen=開放註冊
+rSystem.RegisterInvite=邀請註冊
+
+rSystem.SMTPAddress=SMTP地址
+rSystem.InputSMTPAddress=請輸入SMTP服務器地址(smtp.gmail.com:465)
+rSystem.Email=郵箱地址
+rSystem.InputEmail=請輸入郵箱地址(xxxxxx@gmail.com)
+rSystem.Password=郵箱密碼
+rSystem.InputPassword=請輸入郵箱密碼
+rSystem.TestSMTP=測試配置
+
+rSystem.ActiveEmail=激活郵件
+rSystem.ActiveTitle=郵件標題
+rSystem.ActiveText=郵件內容
+rSystem.InputActiveTitle=請輸入郵件標題
+rSystem.InputActiveText=請輸入郵件內容
+rSystem.TestEmail=測試配置
+
+rSystem.e.active text empty=郵件內容不能為空

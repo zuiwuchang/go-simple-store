@@ -18,15 +18,6 @@
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-
-        <li>
-          <a href="/App/About">[[msg . "About"]]</a>
-        </li>
-        <li>
-          <a href="/App/License">[[msg . "License"]]</a>
-        </li>
-      </ul>
 
       <form class="navbar-form navbar-left">
         <div class="form-group">
@@ -35,6 +26,38 @@
         <button type="submit" class="btn btn-default">[[msg . "Search"]]</button>
       </form>
 
+      <ul class="nav navbar-nav">
+        [[if HasFlags .session.UserGroup "1"]]
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">[[msg . "System Management"]]
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <li>
+              <a href="/Root/User">[[msg . "Admin App"]]</a>
+            </li>
+            <li role="separator" class="divider"></li>
+            <li>
+              <a href="/Root/App">[[msg . "Admin User"]]</a>
+            </li>
+            <li>
+              <a href="/Root/User">[[msg . "Admin Code"]]</a>
+            </li>
+            <li role="separator" class="divider"></li>
+            <li>
+              <a href="/Root/System">[[msg . "Admin System"]]</a>
+            </li>
+
+          </ul>
+        </li>
+        [[end]]
+        <li>
+          <a href="/App/About">[[msg . "About"]]</a>
+        </li>
+        <li>
+          <a href="/App/License">[[msg . "License"]]</a>
+        </li>
+      </ul>
 
       <ul class="nav navbar-nav navbar-right">
         [[if .session.UserID ]]
@@ -50,7 +73,7 @@
         <li>
           <a>[[.session.UserEmail]]</a>
         </li>
-        
+
         [[else]]
         <li>
           <a href="/App/Login">[[msg . "Login"]]</a>
@@ -66,16 +89,18 @@
   <!-- /.container -->
 </nav>
 <script>
-  $("#IdALogout").click(function () {
-    $.ajax({
-      url: '/App/AjaxLogout',
-      type: 'GET',
-      dataType: 'json',
-    }).done(function () {
-      location.reload();
-    }).fail(function (e) {
-      console.log(e.responseJSON.description);
+  require(["jquery"], function ($) {
+    $("#IdALogout").click(function () {
+      $.ajax({
+        url: '/App/AjaxLogout',
+        type: 'GET',
+        dataType: 'json',
+      }).done(function () {
+        location.reload();
+      }).fail(function (e) {
+        console.log(e.responseJSON.description);
+      });
+      return false;
     });
-    return false;
-  });
+  })
 </script>

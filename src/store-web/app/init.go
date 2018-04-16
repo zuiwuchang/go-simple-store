@@ -62,6 +62,7 @@ func init() {
 		// 初始化 數據庫
 		manipulator.Init()
 	})
+
 }
 
 // HeaderFilter adds common security headers

@@ -5,6 +5,7 @@ define(["angular", "Const", "king/strings", "crypto-js/sha512"], function () {
     let Register = Const.Register;
     let sha512 = require("crypto-js/sha512");
    
+    let App;
     let Lange;
     function runApp(isInvite) {
         const CSSHasNone = "";
@@ -266,11 +267,12 @@ define(["angular", "Const", "king/strings", "crypto-js/sha512"], function () {
         }
 
         // 運行 angular 模塊
-        angular.bootstrap(document, ['app']);
+        angular.bootstrap(App, ['app']);
     }
     return function (context) {
         let SystemInfo = context.SystemInfo;
         Lange = context.Lange;
+        App = context.App;
         switch (SystemInfo.Register) {
             case Register.Disabled:
                 console.log("Register.Disabled")

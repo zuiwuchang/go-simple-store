@@ -4,8 +4,9 @@ var pageJS = "../views/App/Register";
 [[else]]
 var pageJS = "../views/App/Register.min";
 [[end]]
-require([pageJS],function(init){
+require(["jquery",pageJS],function($,init){
   init({
+    App:document.getElementById("AngularView"),
     Lange:{
       "E.Unknow":[[msg . "E.Unknow"]],
 
