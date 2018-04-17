@@ -95,10 +95,15 @@ func (c App) AjaxLogin(email, pwd string) revel.Result {
 	var result ajax.Result
 	var mUser manipulator.User
 	if user, e := mUser.GetByEmail(email); e == nil {
-		if user != nil && user.Pwd == pwd {
-			result.Value = user.ID
-			// 設置 登入 session
-			writeSession(c.Session, user)
+		if user != nil {
+			if user.Disabled {
+				result.Code = ajax.Error
+				result.Emsg = c.Message("User is disabled")
+			} else if user.Pwd == pwd {
+				result.Value = user.ID
+				// 設置 登入 session
+				writeSession(c.Session, user)
+			}
 		}
 	} else {
 		result.Code = ajax.Error

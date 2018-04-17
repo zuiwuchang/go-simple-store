@@ -1,0 +1,29 @@
+[[set . "title" (msg . "actIndex.title")]] [[template "headerNav.html" .]]
+
+
+<div class="container AngularView" id="AngularView" ng-controller="ctrl">
+  <div class="alert alert-info" role="alert">
+    <span class="glyphicon glyphicon-fire" aria-hidden="true"></span>
+    <span class="sr-only"></span>
+    [[msg . "actIndex.text" .email]]
+  </div>
+
+  <div class="alert alert-success" role="alert" ng-show="sendOk">
+    <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+    <span class="sr-only"></span>
+    [[msg . "actIndex.SendOk"]]
+  </div>
+
+  <div class="alert alert-danger" role="alert" ng-hide="error==''">
+    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+    <span class="sr-only"></span>
+    {{error}}
+  </div>
+
+  <div>
+    <button class="btn btn-default" ng-disabled="isDisabled()" ng-click="onSend()">[[msg . "actIndex.resend"]]<span ng-hide="wait==0"> ( {{wait}}s )</span></button>
+  </div>
+</div>
+
+
+[[template "Active/Index.gt" .]] [[template "footer.html" .]]

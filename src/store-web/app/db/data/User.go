@@ -10,6 +10,8 @@ import (
 const (
 	// ColUserActive .
 	ColUserActive = "active"
+	// ColUserLastEmail .
+	ColUserLastEmail = "last_email"
 )
 
 // ErrBadUserPwd .
@@ -35,6 +37,9 @@ type User struct {
 
 	// 所屬 用戶組id (多個以 : 分隔)
 	UserGroup string
+
+	// 帳號被禁用
+	Disabled bool
 }
 
 // SetEmail .

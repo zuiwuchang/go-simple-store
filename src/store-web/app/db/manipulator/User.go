@@ -276,3 +276,53 @@ func (User) Active(id int64, code string) (user *data.User, e error) {
 	user = bean
 	return
 }
+
+// SendActiveEmail 發送 激活 郵件
+func (User) SendActiveEmail(host string, user *data.User) (e error) {
+	var mSys SystemInfo
+	var systemInfo *data.SystemInfo
+	systemInfo, e = mSys.Get()
+	if e != nil {
+		return
+	}
+
+	// 發送 激活 郵件
+	text, en := data.GetActiveCode(user.ID, user.Created.Unix())
+	if en != nil {
+		if log.Warn != nil {
+			log.Warn.Println(en)
+		}
+		return
+	}
+	text, en = data.GetActiveEmail(
+		&data.ActiveContext{
+			Host:  host,
+			Email: user.Email,
+			ID:    user.ID,
+			Code:  text,
+		},
+		systemInfo.ActiveText,
+	)
+	if en != nil {
+		if log.Warn != nil {
+			log.Warn.Println(en)
+		}
+		return
+	}
+	if en = kEmail.SendSSLEmail(
+		systemInfo.SMTP,
+		systemInfo.Email,
+		systemInfo.Password,
+		user.Email,
+		systemInfo.ActiveTitle,
+		text,
+		kEmail.TypeHTML,
+	); en != nil && log.Warn != nil {
+		log.Warn.Println(en)
+	}
+
+	// 更新 郵件 請求時間
+	user.LastEmail = time.Now()
+	Engine().Id(user.ID).Cols(data.ColUserLastEmail).Update(user)
+	return
+}

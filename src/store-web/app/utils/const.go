@@ -17,8 +17,15 @@ const (
 	SessionKeyLastEmail = "UserLastEmail"
 	// SessionKeyGroup .
 	SessionKeyGroup = "UserGroup"
+
+	// SessionKeyDisabled .
+	SessionKeyDisabled = "UserDisabled"
 )
 const (
 	// GroupRootFlag .
 	GroupRootFlag = "1"
+)
+const (
+	// ActiveEmailInterval 發送 激活郵件 時間間隔 (喵)
+	ActiveEmailInterval = 120
 )

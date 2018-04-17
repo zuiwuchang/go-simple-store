@@ -29,6 +29,8 @@ Admin System=系統
 
 Save=保存
 
+User is disabled=用戶被禁用
+
 # error
 E.PermissionDenied=沒有權限
 E.Unknow=未知錯誤
@@ -85,3 +87,10 @@ rSystem.InputActiveText=請輸入郵件內容
 rSystem.TestEmail=測試配置
 
 rSystem.e.active text empty=郵件內容不能為空
+
+# /Active/Index
+actIndex.title=激活帳號
+actIndex.text=激活郵件已經發送到<strong>%s</strong>,如果你沒有收到郵件,可以點擊下面的按鈕請求重新發送。
+actIndex.resend=重發郵件
+actIndex.SendOk=郵件發送成功，請注意查收。
+actIndex.request active email busy=請求請求太過頻繁，請稍後在重試。

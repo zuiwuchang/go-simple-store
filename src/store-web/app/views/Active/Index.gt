@@ -1,0 +1,15 @@
+<script>
+[[if .DevMode]]
+var pageJS = "../views/Active/Index";
+[[else]]
+var pageJS = "../views/Active/Index.min";
+[[end]]
+require(["jquery",pageJS],function($,init){
+  init({
+    App:document.getElementById("AngularView"),
+    wait:[[.wait]],
+    interval:[[.interval]],
+  });
+  $("#AngularView").show();
+});
+</script>
