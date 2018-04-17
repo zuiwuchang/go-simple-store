@@ -1,0 +1,26 @@
+<script>
+[[if .DevMode]]
+var pageJS = "../views/Root/Code";
+[[else]]
+var pageJS = "../views/Root/Code.min";
+[[end]]
+require(["jquery",pageJS],function($,init){
+  init({
+    App:document.getElementById("AngularView"),
+    Lange:{
+        "Unknow":[[msg . "Unknow"]],
+
+        "f.code":[[msg . "rCode.Filter Code"]],
+        "f.rows":[[msg . "rCode.Filter Rows"]],
+        "f.i.code":[[msg . "rCode.Input Filter Code"]],
+        "f.i.rows":[[msg . "rCode.Input Filter Rows"]],
+
+        "p.p":[[msg . "page.previous"]],
+        "p.n":[[msg . "page.next"]],
+        "p.f":[[msg . "page.first"]],
+        "p.l":[[msg . "page.last"]],
+    },
+  });
+  $("#AngularView").show();
+});
+</script>

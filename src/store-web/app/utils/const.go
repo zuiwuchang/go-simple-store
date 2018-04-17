@@ -26,6 +26,6 @@ const (
 	GroupRootFlag = "1"
 )
 const (
-	// ActiveEmailInterval 發送 激活郵件 時間間隔 (喵)
+	// ActiveEmailInterval 發送 激活郵件 時間間隔 (秒)
 	ActiveEmailInterval = 120
 )

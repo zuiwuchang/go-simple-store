@@ -20,8 +20,10 @@ requirejs.config({
         'bootstrap':'bootstrap-3.3.6.min',
 [[if .DevMode]]
         'Const':'../views/Const',
+        'Utils':'../views/Utils',
 [[else]]
         'Const':'../views/Const.min',
+        'Utils':'../views/Utils.min',
 [[end]]
     },
     shim: {
@@ -38,5 +40,8 @@ require(["jquery","bootstrap"])
 <style>
 .AngularView{
   display: none;
+}
+.Pointer{
+    cursor: pointer;
 }
 </style>

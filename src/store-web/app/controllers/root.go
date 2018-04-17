@@ -115,3 +115,72 @@ func (c Root) AjaxTestActive(text string) revel.Result {
 	result.Str = str
 	return c.RenderJSON(&result)
 }
+
+// Code 邀請碼 管理
+func (c Root) Code() revel.Result {
+	return c.Render()
+}
+
+// AjaxCode 創建 邀請碼
+func (c Root) AjaxCode() revel.Result {
+	var result ajax.Result
+
+	var mCode manipulator.InviteCode
+	if code, e := mCode.Code(); e == nil {
+		result.Str = code
+	} else {
+		result.Code = ajax.Error
+		result.Emsg = e.Error()
+	}
+	return c.RenderJSON(&result)
+}
+
+// AjaxFindCode .
+func (c Root) AjaxFindCode(rows, page, pages int64, code string) revel.Result {
+	var result ajax.ResultFindCode
+	//每頁顯示 數量
+	if rows < 10 {
+		rows = 10
+	} else if rows > 50 {
+		rows = 50
+	}
+
+	//當前頁 從1 開始 計數
+	if page < 1 {
+		page = 1
+	}
+
+	//不知道 總頁數
+	var mCode manipulator.InviteCode
+	if pages < 1 {
+		// 查詢 總頁數
+		n, e := mCode.Count(code)
+		if e != nil {
+			result.Code = ajax.Error
+			result.Emsg = e.Error()
+			return c.RenderJSON(&result)
+		}
+		if n < 1 {
+			pages = 0
+		} else {
+			pages = (n + rows - 1) / rows
+		}
+	}
+	result.Pages = pages
+	if pages < 1 {
+		// 沒有數據 直接 返回
+		return c.RenderJSON(&result)
+	}
+
+	//查詢 數據
+	start := (page - 1) * rows
+	datas, e := mCode.Find(start, rows, code)
+	if e != nil {
+		result.Code = ajax.Error
+		result.Emsg = e.Error()
+		return c.RenderJSON(&result)
+	}
+
+	result.Data = datas
+	return c.RenderJSON(&result)
+}

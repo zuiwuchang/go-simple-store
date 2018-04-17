@@ -108,6 +108,7 @@ func initDB() {
 		&data.AppVersion{},
 		&data.User{},
 		&data.UserGroup{},
+		&data.InviteCode{},
 	); e != nil {
 		return
 	}

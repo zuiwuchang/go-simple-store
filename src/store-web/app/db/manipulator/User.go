@@ -6,6 +6,7 @@ import (
 	"store-web/app/db/data"
 	"store-web/app/db/dberr"
 	"store-web/app/log"
+	"store-web/app/utils"
 	"strings"
 	"time"
 )
@@ -158,7 +159,7 @@ func (u User) Register(host, email, pwd, code string) (nuser *data.User, e error
 
 func (User) registerRoot(session *xorm.Session, systemInfo *data.SystemInfo, user *data.User) (e error) {
 	// 設置 root 組 激活狀態
-	user.UserGroup = "1"
+	user.UserGroup = utils.Separator + utils.GroupRootFlag + utils.Separator
 	user.Active = true
 	// 增加 用戶
 	_, e = session.InsertOne(user)

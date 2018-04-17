@@ -1,0 +1,93 @@
+[[set . "title" (msg . "Admin Code")]] [[template "headerNav.html" .]]
+
+<div class="container AngularView" id="AngularView">
+    <div class="panel panel-default" ng-controller="ctrl-new">
+        <div class="panel-heading">
+            <h3 class="panel-title">[[msg . "rCode.New"]]</h3>
+        </div>
+        <div class="panel-body">
+            <div class="alert alert-success" role="alert" ng-show="code!=''">
+                <span class="glyphicon glyphicon-fire" aria-hidden="true"></span>
+                <span class="sr-only"></span>
+                {{code}}
+            </div>
+
+            <div class="alert alert-danger" role="alert" ng-hide="error==''">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <span class="sr-only"></span>
+                {{error}}
+            </div>
+
+
+            <p>
+                <button class="btn btn-default" ng-disabled="disabled" ng-click="onCreate()">[[msg . "rCode.Create"]]</button>
+            </p>
+        </div>
+    </div>
+
+    <div class="panel panel-default" ng-controller="ctrl-search">
+        <div class="panel-heading">
+            <h3 class="panel-title">[[msg . "rCode.Search"]]</h3>
+        </div>
+        <div class="panel-body">
+            <p>
+                <div class="input-group">
+                    <div class="input-group-btn">
+                        <button type="button" ng-disabled="disabled" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">{{title}}
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a href ng-click="onBtnCode()">[[msg . "rCode.Filter Code"]]</a>
+                            </li>
+                            <li>
+                                <a href ng-click="onBtnRows()">[[msg . "rCode.Filter Rows"]]</a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li>
+                                <a href ng-click="onBtnReset()">[[msg . "rCode.Filter Reset"]]</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- /btn-group -->
+                    <input type="text" class="form-control" aria-label="..." placeholder='[[msg . "rCode.Input Filter Code"]]' ng-disabled="disabled"
+                        ng-model="code" ng-show="action==0">
+                    <input type="text" class="form-control" aria-label="..." placeholder='[[msg . "rCode.Input Filter Rows"]]' ng-disabled="disabled"
+                        ng-model="rows" ng-show="action==1">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" ng-click="onBtnSearch()" ng-disabled="disabled">[[msg . "rCode.Go"]]</button>
+                    </span>
+                </div>
+            </p>
+            <!-- /input-group -->
+
+            <div class="alert alert-danger" role="alert" ng-hide="error==''">
+                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                <span class="sr-only"></span>
+                {{error}}
+            </div>
+
+            <div ng-show="show">
+                <nav aria-label="Page navigation" ng-show="pages.length!=0">
+                    <ul class="pagination">
+                        <li ng-repeat="node in pages" ng-class="node.Class">
+                            <span class="Pointer" ng-click="onBtnPage(node.Page)">{{node.Name}}</span>
+                        </li>
+                    </ul>
+                </nav>
+
+                <nav aria-label="Page navigation" ng-show="pages.length!=0">
+                    <ul class="pagination">
+                        <li ng-repeat="node in pages" ng-class="node.Class">
+                            <span class="Pointer" ng-click="onBtnPage(node.Page)">{{node.Name}}</span>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <!-- /panel-body -->
+    </div>
+</div>
+
+[[template "Root/Code.gt" .]] [[template "footer.html" .]]
