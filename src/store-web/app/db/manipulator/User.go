@@ -183,6 +183,30 @@ func (User) registerRoot(session *xorm.Session, systemInfo *data.SystemInfo, use
 func (User) register(session *xorm.Session, systemInfo *data.SystemInfo, user *data.User, code string) (e error) {
 	if systemInfo.Register == data.RegisterInvite {
 		// 驗證 邀請碼
+		code = strings.TrimSpace(code)
+		if code == "" {
+			e = dberr.ErrUserBadInviteCode
+			if log.Warn != nil {
+				log.Warn.Println(e, code)
+			}
+			return
+		}
+		var n int64
+		n, e = session.Delete(&data.InviteCode{
+			Code: code,
+		})
+		if e != nil {
+			if log.Error != nil {
+				log.Error.Println(e, code)
+			}
+			return
+		} else if n == 0 {
+			e = dberr.ErrUserBadInviteCode
+			if log.Warn != nil {
+				log.Warn.Println(e, code)
+			}
+			return
+		}
 	}
 	// 增加 用戶
 	_, e = session.InsertOne(user)

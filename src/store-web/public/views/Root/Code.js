@@ -1,6 +1,7 @@
-define(["Utils", "angular"], function () {
+define(["Utils", "angular", "king/strings"], function () {
     'use strict';
     let Utils = require("Utils");
+    let strings = require("king/strings")
     return function (context) {
         let App = context.App;
         let Lange = context.Lange;
@@ -19,8 +20,8 @@ define(["Utils", "angular"], function () {
 
         app.controller("ctrl-new",
             [
-                "$scope", "$http",
-                function ($scope, $http) {
+                "$scope", "$http","$rootScope",
+                function ($scope, $http,$rootScope) {
                     $scope.disabled = false;
                     $scope.error = "";
                     $scope.code = "";
@@ -41,6 +42,8 @@ define(["Utils", "angular"], function () {
                                 $scope.error = rs.Emsg;
                             } else {
                                 $scope.code = rs.Str;
+                                // 通知 數據已變化
+                                $rootScope.$broadcast('newCode');
                             }
                         }, (response) => {
                             $scope.error = response.data.description;
@@ -67,6 +70,7 @@ define(["Utils", "angular"], function () {
                     $scope.code = "";
                     $scope.rows = 20;
                     $scope.pages = [];
+                    $scope.datas = [];
 
                     $scope.title = Lange["f.code"];
                     $scope.onBtnCode = function () {
@@ -92,6 +96,10 @@ define(["Utils", "angular"], function () {
                         Page: null,
                         Pages: null,
                     };
+                    let newCode = false;
+                    $scope.$on("newCode",function(){
+                        newCode = true;
+                    });
 
                     function updateView(rs, rows, pages, page, code) {
                         // 更新 緩存
@@ -102,6 +110,16 @@ define(["Utils", "angular"], function () {
 
                         // 更新 翻頁按鈕
                         $scope.pages = Utils.CreateNavPage(rs.Pages, page, 5, Lange["p.f"], Lange["p.l"])
+
+                        // 更新 view
+                        if (rs.Data && rs.Data.length != 0) {
+                            for (let i = 0; i < rs.Data.length; i++) {
+                                rs.Data[i].Created = strings.FormatDate(new Date(rs.Data[i].Created), "yyyy-mm-dd HH:MM:SS");
+                            }
+                            $scope.datas = rs.Data;
+                        } else {
+                            $scope.datas = [];
+                        }
                     }
                     function doSearch(rows, pages, page, code) {
                         // 禁用 ui
@@ -124,8 +142,9 @@ define(["Utils", "angular"], function () {
                             if (rs.Code) {
                                 $scope.error = rs.Emsg;
                             } else {
-                                updateView(rs, rows, pages, page, code);
+                                updateView(rs, rows, rs.Pages, page, code);
                                 $scope.show = true;
+                                newCode = false;
                             }
                         }, (response) => {
                             $scope.error = response.data.description;
@@ -136,20 +155,56 @@ define(["Utils", "angular"], function () {
                     }
                     $scope.onBtnSearch = function () {
                         // 檢查是否需要更新
-                        if ($scope.rows == cache.Rows && $scope.code == cache.Code && 1 == cache.Page) {
+                        if (!newCode && $scope.rows == cache.Rows && $scope.code == cache.Code && 1 == cache.Page) {
                             $log.info("not need search");
                             return;
                         }
                         doSearch($scope.rows, 0, 1, $scope.code);
                     };
                     $scope.onBtnPage = function (page) {
+                        if ($scope.disabled) {
+                            return;
+                        }
                         // 檢查是否需要更新
-                        if (page == cache.Page) {
+                        if (!newCode && page == cache.Page) {
                             $log.info("not need search");
                             return;
                         }
                         doSearch(cache.Rows, cache.Pages, page, cache.Code);
-                    }
+                    };
+                    $scope.onBtnDelete = function (id) {
+                        // 禁用 ui
+                        $scope.disabled = true;
+                        $scope.error = "";
+
+                        // 請求 數據
+                        $http({
+                            method: 'post',
+                            url: '/Root/AjaxRemoveCode',
+                            data: {
+                                id: id,
+                            },
+                        }).then((response) => {
+                            let rs = response.data;
+                            if (rs.Code) {
+                                $scope.error = rs.Emsg;
+                            } else {
+                                // 刪除 view
+                                for (let i = 0; i < $scope.datas.length; i++) {
+                                    const element = $scope.datas[i];
+                                    if (element.ID == id) {
+                                        $scope.datas.splice(i, 1);
+                                        break;
+                                    }
+                                }
+                            }
+                        }, (response) => {
+                            $scope.error = response.data.description;
+                        }).finally(() => {
+                            // 啟用 ui
+                            $scope.disabled = false;
+                        });
+                    };
                 },
             ]
         );

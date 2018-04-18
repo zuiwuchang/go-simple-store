@@ -77,10 +77,27 @@
                     </ul>
                 </nav>
 
+                <table class="table" ng-show="datas.length!=0">
+                    <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Created</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="node in datas">
+                            <td>{{node.Code}}</td>
+                            <td>{{node.Created}}</td>
+                            <td><button class="btn btn-default" ng-disabled="disabled" ng-click="onBtnDelete(node.ID)">[[msg . "Delete"]]</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+
                 <nav aria-label="Page navigation" ng-show="pages.length!=0">
                     <ul class="pagination">
                         <li ng-repeat="node in pages" ng-class="node.Class">
-                            <span class="Pointer" ng-click="onBtnPage(node.Page)">{{node.Name}}</span>
+                            <span class="Pointer" ng-disabled="disabled" ng-click="onBtnPage(node.Page)">{{node.Name}}</span>
                         </li>
                     </ul>
                 </nav>

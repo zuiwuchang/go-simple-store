@@ -21,5 +21,5 @@ type Result struct {
 type ResultFindCode struct {
 	Result
 	Pages int64
-	Data  []*data.InviteCode
+	Data  []data.InviteCode
 }

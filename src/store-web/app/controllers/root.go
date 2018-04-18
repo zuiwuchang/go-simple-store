@@ -184,3 +184,16 @@ func (c Root) AjaxFindCode(rows, page, pages int64, code string) revel.Result {
 	result.Data = datas
 	return c.RenderJSON(&result)
 }
+
+// AjaxRemoveCode .
+func (c Root) AjaxRemoveCode(id int64) revel.Result {
+	var result ajax.Result
+	if id != 0 {
+		var mCode manipulator.InviteCode
+		if e := mCode.Remove(id); e != nil {
+			result.Code = ajax.Error
+			result.Emsg = e.Error()
+		}
+	}
+	return c.RenderJSON(&result)
+}

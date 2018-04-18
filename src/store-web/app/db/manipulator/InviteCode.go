@@ -90,13 +90,13 @@ func (m InviteCode) Count(code string) (n int64, e error) {
 }
 
 // Find .
-func (m InviteCode) Find(start, rows int64, code string) (datas []*data.InviteCode, e error) {
-	var beans []*data.InviteCode
+func (m InviteCode) Find(start, rows int64, code string) (datas []data.InviteCode, e error) {
+	var beans []data.InviteCode
 
 	session := m.findSession(NewSession(), code)
 	defer session.Close()
 
-	e = session.Limit(int(rows), int(start)).Desc("id").Find(&beans)
+	e = session.Limit(int(rows), int(start)).Desc(data.ColInviteCodeID).Find(&beans)
 	if e != nil {
 		if log.Error != nil {
 			log.Error.Println(e)
@@ -104,5 +104,20 @@ func (m InviteCode) Find(start, rows int64, code string) (datas []*data.InviteCo
 		return
 	}
 	datas = beans
+	return
+}
+
+// Remove .
+func (m InviteCode) Remove(id int64) (e error) {
+	if id == 0 {
+		return
+	}
+
+	_, e = Engine().Id(id).Delete(&data.InviteCode{})
+	if e != nil {
+		if log.Error != nil {
+			log.Error.Println(e)
+		}
+	}
 	return
 }
