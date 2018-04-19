@@ -7,7 +7,7 @@ define(["angular"], function () {
 
         // 創建 angular 模塊
         let app = angular.module('app', []);
-        app.config(function ($httpProvider) {
+        app.config(["$httpProvider", function ($httpProvider) {
             $httpProvider.defaults.transformRequest = function (data) {
                 if (data === undefined) {
                     return data;
@@ -15,7 +15,7 @@ define(["angular"], function () {
                 return $.param(data);
             }
             $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded; charset=UTF-8';
-        });
+        }]);
 
         app.controller("ctrl-register",
             [
