@@ -1,0 +1,26 @@
+<script src="/public/js/require.js"></script>
+<script>
+requirejs.config({
+    // js 加載 根目錄
+    baseUrl: '/public/js',
+    paths: {
+        // angular 相對 baseUrl 目錄
+        'angular': 'angularjs/1.6.9/angular.min',
+        'jquery':'jquery-2.2.4.min',
+        'bootstrap':'bootstrap-3.3.6.min',
+[[if .DevMode]]
+        'Const':'../views/Const',
+        'Utils':'../views/Utils',
+[[else]]
+        'Const':'../views/Const.min',
+        'Utils':'../views/Utils.min',
+[[end]]
+    },
+    shim: {
+        // 將 angular 導出為全局 變量
+        'angular' : { exports: 'angular' },
+        'bootstrap': ['jquery'],
+    }
+});
+require(["jquery","bootstrap"])
+</script>

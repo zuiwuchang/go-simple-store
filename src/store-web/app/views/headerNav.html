@@ -91,19 +91,3 @@
   </div>
   <!-- /.container -->
 </nav>
-<script>
-  require(["jquery"], function ($) {
-    $("#IdALogout").click(function () {
-      $.ajax({
-        url: '/App/AjaxLogout',
-        type: 'GET',
-        dataType: 'json',
-      }).done(function () {
-        location.reload();
-      }).fail(function (e) {
-        console.log(e.responseJSON.description);
-      });
-      return false;
-    });
-  })
-</script>

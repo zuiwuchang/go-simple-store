@@ -1,7 +1,22 @@
   [[if eq .RunMode "dev"]]
     [[template "debug.html" .]]
   [[end]]
-
+<script>
+  require(["jquery"], function ($) {
+    $("#IdALogout").click(function () {
+      $.ajax({
+        url: '/App/AjaxLogout',
+        type: 'GET',
+        dataType: 'json',
+      }).done(function () {
+        location.reload();
+      }).fail(function (e) {
+        console.log(e.responseJSON.description);
+      });
+      return false;
+    });
+  })
+</script>
 <style>
 .k-footer-docs {
     text-align: center;

@@ -197,3 +197,8 @@ func (c Root) AjaxRemoveCode(id int64) revel.Result {
 	}
 	return c.RenderJSON(&result)
 }
+
+// App 套件 管理
+func (c Root) App() revel.Result {
+	return c.Render()
+}
